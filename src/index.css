@@ -1,0 +1,127 @@
+﻿@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===================== ANIMATIONS ===================== */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes borderGlow {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.55; }
+}
+
+/* ===================== CLASSES ===================== */
+
+/* Staggered fade-in entrances */
+.fade-in-up { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.fade-in-up-delay-1 { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both; }
+.fade-in-up-delay-2 { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both; }
+.fade-in-up-delay-3 { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.44s both; }
+
+/* Clean input bar */
+.glass-input {
+  position: relative;
+  background: rgba(24, 24, 27, 0.6);
+  border: 1px solid rgba(63, 63, 70, 0.4);
+  box-shadow: 0 8px 32px rgba(99,102,241,0.08), 0 4px 16px rgba(0,0,0,0.25);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-input::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 1rem;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(139,92,246,0.25), rgba(99,102,241,0.1), rgba(168,85,247,0.08), rgba(129,140,248,0.2));
+  background-size: 300% 300%;
+  animation: gradientShift 4s ease infinite, borderGlow 3s ease-in-out infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.glass-input:focus-within {
+  border-color: rgba(99, 102, 241, 0.25);
+  box-shadow: 0 8px 32px rgba(99,102,241,0.12), 0 4px 16px rgba(0,0,0,0.25), 0 0 0 1px rgba(99,102,241,0.1);
+}
+
+/* Typewriter cursor */
+.typewriter-cursor::after {
+  content: '|';
+  animation: blink 0.8s step-end infinite;
+  margin-left: 2px;
+  color: #818cf8;
+}
+
+/* Chip hover */
+.chip-hover {
+  transition: all 0.2s ease;
+}
+.chip-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* ===================== CAROUSEL ===================== */
+
+@keyframes carouselSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(var(--slide-dir, 40px));
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes carouselProgress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+.carousel-slide-in {
+  animation: carouselSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.carousel-progress {
+  animation: carouselProgress linear both;
+}
+
+/* Hide scrollbar on carousel */
+.use-case-card {
+  text-decoration: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
