@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useCallback } from 'react'
+﻿import { useState, useCallback } from 'react'
 import useReveal from '../hooks/useReveal'
 import useApiData from '../hooks/useApiData'
 
@@ -65,34 +65,13 @@ const defaultFeatures = [
   },
 ]
 
-function TypingText({ text, active }) {
-  const [displayed, setDisplayed] = useState('')
-
-  useEffect(() => {
-    if (!active) { setDisplayed(''); return }
-    setDisplayed('')
-    let i = 0
-    const id = setInterval(() => {
-      i++
-      setDisplayed(text.slice(0, i))
-      if (i >= text.length) clearInterval(id)
-    }, 12)
-    return () => clearInterval(id)
-  }, [text, active])
-
-  if (!active) return null
-  return (
-    <span>
-      {displayed}
-      {displayed.length < text.length && <span className="inline-block w-[2px] h-[14px] bg-indigo-400 ml-0.5 align-middle animate-pulse" />}
-    </span>
-  )
+function TypingText({ text }) {
+  return <span>{text}</span>
 }
 
 export default function Features() {
   const features = useApiData('features', defaultFeatures)
   const [active, setActive] = useState(0)
-  const [isPaused, setIsPaused] = useState(false)
   const [direction, setDirection] = useState(1)
   const [ref, visible] = useReveal(0.08)
 
@@ -104,30 +83,22 @@ export default function Features() {
   const next = useCallback(() => {
     setDirection(1)
     setActive(p => (p + 1) % features.length)
-  }, [])
+  }, [features.length])
 
   const prev = useCallback(() => {
     setDirection(-1)
     setActive(p => (p - 1 + features.length) % features.length)
-  }, [])
-
-  // Auto-advance
-  useEffect(() => {
-    if (isPaused) return
-    const id = setInterval(next, 5000)
-    return () => clearInterval(id)
-  }, [isPaused, next])
+  }, [features.length])
 
   const f = features[active]
 
   return (
     <section
       id="features"
-      className="w-full px-5 pt-28 md:pt-36 pb-20 md:pb-28"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      className="relative w-full px-5 pt-28 md:pt-36 pb-20 md:pb-28 overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="absolute left-1/2 top-28 h-64 w-64 -translate-x-1/2 rounded-full bg-white/[0.025] blur-3xl pointer-events-none" />
+      <div className="relative max-w-6xl mx-auto">
         {/* Header */}
         <div
           ref={ref}
@@ -138,8 +109,8 @@ export default function Features() {
             transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
           }}
         >
-          <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-indigo-400/70 mb-4">Features</p>
-          <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold text-neutral-100 tracking-tight leading-[1.1]">
+          <p className="inline-flex rounded-full border border-indigo-300/15 bg-indigo-300/[0.06] px-3 py-1.5 text-[11px] font-semibold tracking-[0.2em] uppercase text-indigo-300/80 mb-4">Features</p>
+          <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-black text-neutral-100 tracking-tight leading-[1.1]">
             Not just another chatbot.
           </h2>
           <p className="mt-4 text-[15.5px] text-neutral-500 max-w-lg mx-auto leading-relaxed">
@@ -148,7 +119,7 @@ export default function Features() {
         </div>
 
         {/* Carousel */}
-        <div className="relative">
+        <div className="relative glass-panel rounded-[2.25rem] p-5 md:p-8 lg:p-10">
           {/* Main content area */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center min-h-[420px] md:min-h-[460px]">
 
@@ -197,7 +168,7 @@ export default function Features() {
                         <div className="absolute inset-0 rounded-full" style={{ background: f.color + '30' }} />
                         <div
                           className="absolute inset-y-0 left-0 rounded-full carousel-progress"
-                          style={{ background: f.color, animationDuration: isPaused ? '999s' : '5s' }}
+                          style={{ background: f.color, animationDuration: '0.001s' }}
                         />
                       </>
                     )}
@@ -213,10 +184,10 @@ export default function Features() {
               style={{ '--slide-dir': direction > 0 ? '50px' : '-50px' }}
             >
               <div
-                className="relative rounded-2xl border overflow-hidden transition-all duration-500"
+                className="relative rounded-[1.75rem] border overflow-hidden transition-all duration-500 backdrop-blur-2xl"
                 style={{
                   borderColor: f.color + '15',
-                  background: 'rgba(23,23,26,0.7)',
+                  background: 'linear-gradient(180deg, rgba(255,255,255,0.07), rgba(16,16,25,0.78))',
                   boxShadow: '0 30px 80px -20px rgba(0,0,0,0.5), 0 0 60px -15px ' + f.color + '12',
                 }}
               >
@@ -254,37 +225,32 @@ export default function Features() {
                     <div>
                       <span className="text-[11px] font-medium text-neutral-600 block mb-1">GuffGPT</span>
                       <p className="text-[14px] text-neutral-400 leading-[1.75] whitespace-pre-line">
-                        <TypingText text={f.response} active={true} />
+                        <TypingText text={f.response} />
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Ambient glow */}
-                <div
-                  className="absolute -bottom-20 -right-20 w-60 h-60 rounded-full blur-[80px] opacity-[0.07] pointer-events-none transition-colors duration-700"
-                  style={{ background: f.color }}
-                />
               </div>
             </div>
           </div>
 
           {/* Prev / Next arrows */}
           <div className="flex items-center justify-center gap-3 mt-10 lg:hidden">
-            <button onClick={prev} className="w-10 h-10 rounded-full border border-neutral-800/60 bg-neutral-900/50 flex items-center justify-center hover:bg-neutral-800/50 transition-colors cursor-pointer" aria-label="Previous">
+            <button onClick={prev} className="w-10 h-10 rounded-full border border-white/[0.1] bg-white/[0.05] flex items-center justify-center hover:bg-white/[0.09] transition-colors cursor-pointer" aria-label="Previous">
               <svg className="w-4 h-4 text-neutral-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
             </button>
             <span className="text-[12px] text-neutral-600 font-mono tabular-nums">{String(active + 1).padStart(2, '0')} / {String(features.length).padStart(2, '0')}</span>
-            <button onClick={next} className="w-10 h-10 rounded-full border border-neutral-800/60 bg-neutral-900/50 flex items-center justify-center hover:bg-neutral-800/50 transition-colors cursor-pointer" aria-label="Next">
+            <button onClick={next} className="w-10 h-10 rounded-full border border-white/[0.1] bg-white/[0.05] flex items-center justify-center hover:bg-white/[0.09] transition-colors cursor-pointer" aria-label="Next">
               <svg className="w-4 h-4 text-neutral-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
             </button>
           </div>
 
           {/* Desktop side arrows */}
-          <button onClick={prev} className="hidden lg:flex absolute -left-14 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-neutral-800/40 bg-neutral-900/40 items-center justify-center hover:bg-neutral-800/40 hover:border-neutral-700/50 transition-all cursor-pointer" aria-label="Previous">
+          <button onClick={prev} className="hidden lg:flex absolute -left-5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full border border-white/[0.1] bg-black/30 backdrop-blur-xl items-center justify-center hover:bg-white/[0.08] hover:border-indigo-300/30 transition-all cursor-pointer" aria-label="Previous">
             <svg className="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
           </button>
-          <button onClick={next} className="hidden lg:flex absolute -right-14 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-neutral-800/40 bg-neutral-900/40 items-center justify-center hover:bg-neutral-800/40 hover:border-neutral-700/50 transition-all cursor-pointer" aria-label="Next">
+          <button onClick={next} className="hidden lg:flex absolute -right-5 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full border border-white/[0.1] bg-black/30 backdrop-blur-xl items-center justify-center hover:bg-white/[0.08] hover:border-indigo-300/30 transition-all cursor-pointer" aria-label="Next">
             <svg className="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
           </button>
         </div>

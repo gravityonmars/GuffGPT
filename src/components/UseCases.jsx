@@ -38,14 +38,12 @@ const defaultCases = [
   },
 ]
 
-function CarouselCard({ c, dimmed, onHover, onLeave }) {
+function CarouselCard({ c }) {
   return (
     <Link
       to={'/stories/' + c.slug}
-      className="use-case-card group relative flex-shrink-0 w-[340px] sm:w-[420px] md:w-[500px] lg:w-[580px] h-[300px] sm:h-[350px] md:h-[400px] overflow-hidden cursor-pointer block transition-opacity duration-500"
-      style={{ '--card-accent': c.accent, opacity: dimmed ? 0.35 : 1 }}
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
+      className="use-case-card group relative flex-shrink-0 w-[340px] sm:w-[420px] md:w-[500px] lg:w-[580px] h-[300px] sm:h-[350px] md:h-[400px] overflow-hidden cursor-pointer block transition-opacity duration-300"
+      style={{ '--card-accent': c.accent }}
     >
       {/* Image */}
       <div className="absolute inset-0">
@@ -58,7 +56,8 @@ function CarouselCard({ c, dimmed, onHover, onLeave }) {
       </div>
 
       {/* Gradient overlay */}
-      <div className={'absolute inset-0 bg-gradient-to-t ' + c.gradient + ' opacity-70'} />
+      <div className={'absolute inset-0 bg-gradient-to-t ' + c.gradient + ' opacity-75'} />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.18),transparent_38%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
       {/* Content overlay */}
       <div className="relative z-10 flex flex-col justify-end h-full p-7 md:p-9">
@@ -90,30 +89,14 @@ export default function UseCases() {
   const pauseTimeoutRef = useRef(null)
   const isAutoScrollingRef = useRef(false)
   const [isPaused, setIsPaused] = useState(false)
-  const [hoveredIndex, setHoveredIndex] = useState(null)
 
   // Duplicate cards for seamless infinite loop
-  const loopedCases = [...cases, ...cases, ...cases]
+  const loopedCases = cases
 
   // Auto-scroll logic
   const startAutoScroll = useCallback(() => {
-    if (autoScrollRef.current) return
-    isAutoScrollingRef.current = true
-    autoScrollRef.current = requestAnimationFrame(function tick() {
-      const el = scrollRef.current
-      if (el) {
-        el.scrollLeft += 0.6
-        // Seamless loop: when we've scrolled past the first set of duplicates, jump back
-        const singleSetWidth = el.scrollWidth / 3
-        if (el.scrollLeft >= singleSetWidth * 2) {
-          el.scrollLeft -= singleSetWidth
-        }
-        if (el.scrollLeft <= 0) {
-          el.scrollLeft += singleSetWidth
-        }
-      }
-      autoScrollRef.current = requestAnimationFrame(tick)
-    })
+    // Keep this section user-controlled; no automatic movement.
+    isAutoScrollingRef.current = false
   }, [])
 
   const stopAutoScroll = useCallback(() => {
@@ -124,18 +107,10 @@ export default function UseCases() {
     isAutoScrollingRef.current = false
   }, [])
 
-  // Start auto-scroll on mount
+  // Keep the row static by default; users can scroll it manually.
   useEffect(() => {
-    const el = scrollRef.current
-    if (!el) return
-
-    // Start scrolled to the middle set for seamless looping
-    const singleSetWidth = el.scrollWidth / 3
-    el.scrollLeft = singleSetWidth
-
-    startAutoScroll()
     return () => stopAutoScroll()
-  }, [startAutoScroll, stopAutoScroll])
+  }, [stopAutoScroll])
 
   // Pause on hover or user interaction, resume after
   const pauseAndResume = useCallback((duration = 3000) => {
@@ -157,8 +132,6 @@ export default function UseCases() {
 
   const handleMouseLeave = () => {
     setIsPaused(false)
-    setHoveredIndex(null)
-    startAutoScroll()
   }
 
   // Pause on manual scroll (trackpad/touch), resume after idle
@@ -200,8 +173,9 @@ export default function UseCases() {
   }, [])
 
   return (
-    <section id="use-cases" className="w-full py-24 md:py-32 overflow-hidden">
-      <div className="max-w-[100vw]">
+    <section id="use-cases" className="relative w-full py-24 md:py-32 overflow-hidden">
+      <div className="absolute right-0 top-20 h-72 w-72 rounded-full bg-white/[0.025] blur-3xl pointer-events-none" />
+      <div className="relative max-w-[100vw]">
         {/* Header */}
         <div
           ref={ref}
@@ -212,8 +186,8 @@ export default function UseCases() {
             transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
           }}
         >
-          <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-indigo-400/70 mb-4">Stories</p>
-          <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold text-neutral-100 tracking-tight leading-[1.1]">
+          <p className="inline-flex rounded-full border border-indigo-300/15 bg-indigo-300/[0.06] px-3 py-1.5 text-[11px] font-semibold tracking-[0.2em] uppercase text-indigo-300/80 mb-4">Stories</p>
+          <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-black text-neutral-100 tracking-tight leading-[1.1]">
             What can you do with GuffGPT?
           </h2>
           <p className="mt-4 text-[15.5px] text-neutral-500 max-w-xl mx-auto leading-relaxed">
@@ -236,16 +210,13 @@ export default function UseCases() {
               <CarouselCard
                 key={c.slug + '-' + i}
                 c={c}
-                dimmed={hoveredIndex !== null && hoveredIndex !== i}
-                onHover={() => setHoveredIndex(i)}
-                onLeave={() => setHoveredIndex(null)}
               />
             ))}
           </div>
 
           {/* Fade edges */}
-          <div className="absolute top-0 left-0 bottom-4 w-16 md:w-24 bg-gradient-to-r from-[#18181b] to-transparent pointer-events-none z-20" />
-          <div className="absolute top-0 right-0 bottom-4 w-16 md:w-24 bg-gradient-to-l from-[#18181b] to-transparent pointer-events-none z-20" />
+          <div className="absolute top-0 left-0 bottom-4 w-16 md:w-28 bg-gradient-to-r from-[#09090f] to-transparent pointer-events-none z-20" />
+          <div className="absolute top-0 right-0 bottom-4 w-16 md:w-28 bg-gradient-to-l from-[#09090f] to-transparent pointer-events-none z-20" />
         </div>
       </div>
     </section>

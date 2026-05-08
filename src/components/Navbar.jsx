@@ -6,6 +6,7 @@ const navLinks = [
   { label: 'About', href: '/about', isHash: false },
   { label: 'Blog', href: '/blog', isHash: false },
   { label: 'Contact', href: '/contact', isHash: false },
+  { label: 'Privacy', href: '/privacy', isHash: false },
 ]
 
 export default function Navbar() {
@@ -20,63 +21,69 @@ export default function Navbar() {
     }
   }
 
+  const navClass = (href) => (
+    'relative px-3.5 py-2 text-[14px] rounded-full transition-all duration-300 ' +
+    (location.pathname === href
+      ? 'text-white bg-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]'
+      : 'text-slate-400 hover:text-white hover:bg-white/[0.06]')
+  )
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#18181b]/80 backdrop-blur-md border-b border-neutral-800/30">
-      <div className="max-w-[1400px] mx-auto flex items-center justify-between h-[60px] px-5 md:px-8">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 shrink-0">
-          <div className="w-7 h-7 rounded-md bg-indigo-500/15 border border-indigo-500/20 flex items-center justify-center">
-            <span className="text-indigo-300 text-xs font-bold">G</span>
+    <nav className="nav-glass fixed top-0 left-0 right-0 z-50">
+      <div className="max-w-[1400px] mx-auto flex items-center justify-between h-[68px] px-5 md:px-8">
+        <Link to="/" className="group flex items-center gap-2.5 shrink-0" onClick={() => setMobileOpen(false)}>
+          <div className="relative w-9 h-9 rounded-xl bg-white/[0.06] border border-white/[0.1] flex items-center justify-center transition-colors duration-200 group-hover:bg-white/[0.09]">
+            <span className="relative text-slate-100 text-sm font-black tracking-tight">G</span>
           </div>
-          <span className="text-slate-200 text-[15px] font-semibold tracking-tight">GuffGPT</span>
+          <div className="leading-none">
+            <span className="block text-slate-100 text-[15px] font-bold tracking-tight">GuffGPT</span>
+            <span className="hidden sm:block text-[10px] tracking-[0.18em] uppercase text-slate-500 mt-1">Nepal AI</span>
+          </div>
         </Link>
 
-        {/* Center links */}
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden md:flex items-center gap-1.5 rounded-full border border-white/[0.07] bg-white/[0.035] p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
           {navLinks.map((link) =>
             link.isHash ? (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={() => handleNavClick(link)}
-                className="px-3 py-1.5 text-[14px] text-slate-400 hover:text-slate-100 rounded-md hover:bg-white/[0.04] transition-colors"
+                className="px-3.5 py-2 text-[14px] text-slate-400 hover:text-white rounded-full hover:bg-white/[0.06] transition-all duration-300"
               >
                 {link.label}
               </a>
             ) : (
-              <Link
-                key={link.label}
-                to={link.href}
-                className={'px-3 py-1.5 text-[14px] rounded-md transition-colors ' + (location.pathname === link.href ? 'text-slate-100 bg-white/[0.04]' : 'text-slate-400 hover:text-slate-100 hover:bg-white/[0.04]')}
-              >
+              <Link key={link.label} to={link.href} className={navClass(link.href)}>
                 {link.label}
               </Link>
             )
           )}
         </div>
 
-        {/* Right side */}
         <div className="hidden md:flex items-center gap-3 shrink-0">
-          <a href="https://chat.guffgpt.com/" target="_blank" rel="noopener noreferrer" className="text-[14px] text-slate-400 hover:text-slate-100 transition-colors">
+          <a href="https://chat.guffgpt.com/" target="_blank" rel="noopener noreferrer" className="text-[14px] text-slate-400 hover:text-white transition-colors">
             Log in
           </a>
           <a
             href="https://chat.guffgpt.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[14px] text-slate-200 bg-indigo-500/15 border border-indigo-500/20 hover:bg-indigo-500/25 px-4 py-[7px] rounded-lg transition-colors"
+            className="magnetic-btn inline-flex items-center gap-2 text-[14px] text-slate-950 bg-white hover:bg-slate-200 px-4 py-2.5 rounded-full transition-all duration-200"
           >
             Try GuffGPT
+            <svg className="relative w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.4} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
           </a>
         </div>
 
-        {/* Hamburger */}
         <button
-          className="md:hidden flex items-center justify-center w-9 h-9 rounded-md hover:bg-white/[0.04] transition-colors"
+          className="md:hidden flex items-center justify-center w-10 h-10 rounded-full border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] transition-all duration-300"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
+          aria-expanded={mobileOpen}
         >
-          <svg className="w-[18px] h-[18px] text-neutral-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <svg className="w-[18px] h-[18px] text-slate-300" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             {mobileOpen ? (
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             ) : (
@@ -86,44 +93,45 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-[#18181b]/95 backdrop-blur-md border-t border-neutral-800/40 px-5 pb-5 pt-3">
-          <div className="flex flex-col gap-0.5">
-            {navLinks.map((link) =>
-              link.isHash ? (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => handleNavClick(link)}
-                  className="text-[15px] text-neutral-400 hover:text-neutral-100 py-2.5 px-2 rounded-md hover:bg-white/[0.04] transition-colors"
-                >
-                  {link.label}
-                </a>
-              ) : (
-                <Link
-                  key={link.label}
-                  to={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={'text-[15px] py-2.5 px-2 rounded-md transition-colors ' + (location.pathname === link.href ? 'text-neutral-100 bg-white/[0.04]' : 'text-neutral-400 hover:text-neutral-100 hover:bg-white/[0.04]')}
-                >
-                  {link.label}
-                </Link>
-              )
-            )}
-          </div>
-          <div className="mt-4 pt-4 border-t border-neutral-800/60 flex flex-col gap-2">
-            <a href="https://chat.guffgpt.com/" target="_blank" rel="noopener noreferrer" className="text-[15px] text-neutral-400 hover:text-neutral-100 py-2 px-2 transition-colors">
-              Log in
-            </a>
-            <a
-              href="https://chat.guffgpt.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[14px] text-center text-neutral-200 bg-neutral-700 hover:bg-neutral-600 px-4 py-2.5 rounded-lg transition-colors"
-            >
-              Try GuffGPT
-            </a>
+        <div className="mobile-menu-pop md:hidden px-4 pb-4">
+          <div className="rounded-3xl border border-white/[0.08] bg-[#0d0d15]/95 p-3 shadow-2xl shadow-black/40 backdrop-blur-2xl">
+            <div className="flex flex-col gap-1">
+              {navLinks.map((link) =>
+                link.isHash ? (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => handleNavClick(link)}
+                    className="text-[15px] text-slate-400 hover:text-white py-3 px-3 rounded-2xl hover:bg-white/[0.06] transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.label}
+                    to={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={'text-[15px] py-3 px-3 rounded-2xl transition-colors ' + (location.pathname === link.href ? 'text-white bg-white/[0.08]' : 'text-slate-400 hover:text-white hover:bg-white/[0.06]')}
+                  >
+                    {link.label}
+                  </Link>
+                )
+              )}
+            </div>
+            <div className="mt-3 pt-3 border-t border-white/[0.08] grid grid-cols-2 gap-2">
+              <a href="https://chat.guffgpt.com/" target="_blank" rel="noopener noreferrer" className="text-[14px] text-center text-slate-300 hover:text-white py-3 rounded-2xl bg-white/[0.04] transition-colors">
+                Log in
+              </a>
+              <a
+                href="https://chat.guffgpt.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="magnetic-btn text-[14px] text-center text-slate-950 bg-white hover:bg-slate-200 px-4 py-3 rounded-2xl transition-colors duration-200"
+              >
+                Try GuffGPT
+              </a>
+            </div>
           </div>
         </div>
       )}

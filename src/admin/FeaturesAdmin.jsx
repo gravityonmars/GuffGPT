@@ -52,7 +52,7 @@ export default function FeaturesAdmin() {
             </tr>
           </thead>
           <tbody>
-            {items.map((item, i) => (
+            {items.map((item) => (
               <tr key={item.id} className="border-t border-neutral-800/30 hover:bg-neutral-900/40">
                 <td className="px-4 py-3 text-neutral-600">{item.sort_order}</td>
                 <td className="px-4 py-3 text-lg">{item.emoji}</td>

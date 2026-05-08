@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import useReveal from '../hooks/useReveal'
 import Footer from '../components/Footer'
+import AdUnit from '../components/AdSense'
 
 const defaultPosts = {
   'voice-chat': {
@@ -221,20 +222,23 @@ export default function BlogPost() {
 
   return (
     <>
-      <main className="pt-[60px]">
+      <main className="pt-[60px] overflow-hidden">
         {/* Hero image */}
-        <div className="relative w-full h-[50vh] md:h-[55vh] overflow-hidden">
+        <div className="relative w-full h-[54vh] md:h-[60vh] overflow-hidden">
           <img
             src={post.heroImage}
             alt={post.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#18181b] via-[#18181b]/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#08080c] via-[#08080c]/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#08080c]/45 via-transparent to-[#08080c]/20" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#08080c] to-transparent" />
+          <div className="absolute -bottom-20 left-1/2 h-64 w-[720px] -translate-x-1/2 rounded-full blur-3xl" style={{ background: post.color + '22' }} />
 
           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 max-w-3xl mx-auto w-full">
             <Link
               to="/blog"
-              className="inline-flex items-center gap-1.5 text-[12px] font-medium text-neutral-400 hover:text-white transition-colors mb-5"
+              className="chip-hover inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-black/25 px-3.5 py-2 text-[12px] font-medium text-slate-400 hover:text-white transition-colors mb-5 backdrop-blur-xl"
             >
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
@@ -243,24 +247,25 @@ export default function BlogPost() {
             </Link>
             <div className="flex items-center gap-3 mb-3">
               <span
-                className="text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-sm"
+                className="text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full border"
                 style={{ color: post.color, background: post.color + '18' }}
               >
                 {post.tag}
               </span>
-              <span className="text-[12px] text-neutral-400">{post.date}</span>
+              <span className="text-[12px] text-slate-400">{post.date}</span>
             </div>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-white tracking-[-0.035em] leading-tight">
               {post.title}
             </h1>
           </div>
         </div>
 
         {/* Article content */}
-        <article className="max-w-3xl mx-auto px-6 md:px-12 py-12 md:py-16">
+        <article className="relative max-w-3xl mx-auto px-6 md:px-12 py-12 md:py-16">
+          <div className="absolute -left-32 top-10 h-72 w-72 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none" />
           <p
             ref={heroRef}
-            className="text-[17px] md:text-lg text-neutral-300 leading-relaxed mb-12"
+            className="relative glass-panel rounded-[1.75rem] p-6 text-[17px] md:text-lg text-slate-300 leading-relaxed mb-12"
             style={{
               opacity: heroVisible ? 1 : 0,
               transform: 'translateY(' + (heroVisible ? 0 : 16) + 'px)',
@@ -270,6 +275,8 @@ export default function BlogPost() {
             {post.intro}
           </p>
 
+          <AdUnit slot={import.meta.env.VITE_GOOGLE_ADSENSE_ARTICLE_SLOT} />
+
           <div className="space-y-10">
             {post.sections.map((section, i) => (
               <Section key={i} section={section} color={post.color} />
@@ -277,10 +284,10 @@ export default function BlogPost() {
           </div>
 
           {/* Bottom nav */}
-          <div className="mt-16 pt-8 border-t border-neutral-800/50 flex items-center justify-between">
+          <div className="glass-panel mt-16 rounded-[1.75rem] p-4 md:p-5 flex items-center justify-between gap-4">
             <Link
               to="/blog"
-              className="text-[13px] font-medium text-neutral-500 hover:text-neutral-300 transition-colors flex items-center gap-1.5"
+              className="chip-hover rounded-full px-3 py-2 text-[13px] font-medium text-slate-500 hover:text-slate-300 transition-colors flex items-center gap-1.5"
             >
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
@@ -291,7 +298,7 @@ export default function BlogPost() {
               href="https://chat.guffgpt.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[13px] font-medium px-5 py-2.5 transition-colors"
+              className="magnetic-btn rounded-full text-[13px] font-semibold px-5 py-2.5 transition-colors"
               style={{ color: post.color, borderColor: post.color + '30', border: '1px solid' }}
             >
               Try GuffGPT
@@ -304,7 +311,7 @@ export default function BlogPost() {
   )
 }
 
-function Section({ section, color }) {
+function Section({ section }) {
   const [ref, visible] = useReveal(0.1)
 
   return (
@@ -321,7 +328,7 @@ function Section({ section, color }) {
           {section.heading}
         </h2>
       )}
-      <p className="text-[15px] text-neutral-400 leading-[1.8] whitespace-pre-line">
+      <p className="text-[15px] text-slate-400 leading-[1.8] whitespace-pre-line">
         {section.body}
       </p>
     </div>

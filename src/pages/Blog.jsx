@@ -64,7 +64,8 @@ export default function Blog() {
       <main className="pt-[60px]">
         {/* Hero */}
         <section className="px-5 pt-20 md:pt-28 pb-16 md:pb-20 relative overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 50% 40% at 50% 30%, rgba(99,102,241,0.05) 0%, transparent 70%)' }} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 50% 40% at 50% 30%, rgba(99,102,241,0.16) 0%, transparent 70%)' }} />
+          <div className="absolute left-1/2 top-16 h-72 w-72 -translate-x-1/2 rounded-full bg-fuchsia-500/10 blur-3xl pointer-events-none" />
           <div
             ref={ref}
             className="relative max-w-3xl mx-auto text-center"
@@ -74,24 +75,25 @@ export default function Blog() {
               transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
             }}
           >
-            <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-indigo-400/70 mb-4">Blog</p>
-            <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold text-neutral-100 tracking-tight leading-[1.1]">
+            <p className="inline-flex rounded-full border border-indigo-300/15 bg-indigo-400/10 px-4 py-2 text-[11px] font-semibold tracking-[0.2em] uppercase text-indigo-300 mb-4">Blog</p>
+            <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-black text-white tracking-[-0.04em] leading-[1.05]">
               News & Updates
             </h1>
-            <p className="mt-4 text-[16px] text-neutral-500 max-w-lg mx-auto leading-relaxed">
+            <p className="mt-5 text-[16px] text-slate-400 max-w-lg mx-auto leading-relaxed">
               The latest from GuffGPT {String.fromCodePoint(0x2014)} new features, milestones, and what we're building next.
             </p>
           </div>
         </section>
 
         {/* Posts grid */}
-        <section className="px-5 pb-24 md:pb-32">
+        <section className="relative px-5 pb-24 md:pb-32">
+          <div className="absolute right-0 top-12 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none" />
           <div ref={gridRef} className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {posts.map((post, i) => (
               <Link
                 to={post.slug ? '/blog/' + post.slug : '/blog'}
                 key={post.title}
-                className="group rounded-2xl border border-neutral-800/40 bg-neutral-900/20 p-7 transition-all duration-500 hover:border-neutral-700/50 hover:bg-neutral-800/15 hover:-translate-y-1 block"
+                className="lift-card group rounded-[1.5rem] border border-white/[0.08] bg-white/[0.035] p-7 transition-all duration-500 hover:border-white/[0.14] hover:bg-white/[0.055] block backdrop-blur-xl"
                 style={{
                   transitionDelay: gridVisible ? `${i * 80}ms` : '0ms',
                   opacity: gridVisible ? 1 : 0,
@@ -106,12 +108,12 @@ export default function Blog() {
                   >
                     {post.tag}
                   </span>
-                  <span className="text-[12px] text-neutral-600">{post.date}</span>
+                  <span className="text-[12px] text-slate-600">{post.date}</span>
                 </div>
-                <h3 className="text-[18px] font-semibold text-neutral-100 mb-3 tracking-tight group-hover:text-white transition-colors">
+                <h3 className="text-[18px] font-semibold text-white mb-3 tracking-tight group-hover:text-indigo-100 transition-colors">
                   {post.title}
                 </h3>
-                <p className="text-[14px] text-neutral-500 leading-[1.75]">{post.desc}</p>
+                <p className="text-[14px] text-slate-500 leading-[1.75]">{post.desc}</p>
               </Link>
             ))}
           </div>

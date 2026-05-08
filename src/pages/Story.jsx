@@ -153,26 +153,26 @@ const defaultStories = {
 
 function ChatDemo({ prompt, response, accent }) {
   return (
-    <div className="rounded-2xl border border-neutral-800/50 bg-neutral-900/40 overflow-hidden my-8">
-      <div className="px-6 py-4 border-b border-neutral-800/40">
+    <div className="glass-panel overflow-hidden rounded-[1.5rem] my-8">
+      <div className="px-6 py-4 border-b border-white/[0.08] bg-white/[0.025]">
         <div className="flex items-center gap-2.5 mb-2">
-          <div className="w-6 h-6 rounded-full bg-neutral-700/50 flex items-center justify-center">
-            <svg className="w-3 h-3 text-neutral-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <div className="w-6 h-6 rounded-full bg-white/[0.08] flex items-center justify-center">
+            <svg className="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0" />
             </svg>
           </div>
-          <span className="text-[12px] text-neutral-500 font-medium">You</span>
+          <span className="text-[12px] text-slate-500 font-medium">You</span>
         </div>
-        <p className="text-[14px] text-neutral-300 leading-relaxed pl-[34px]">{prompt}</p>
+        <p className="text-[14px] text-slate-300 leading-relaxed pl-[34px]">{prompt}</p>
       </div>
       <div className="px-6 py-5">
         <div className="flex items-center gap-2.5 mb-3">
           <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ background: accent + '18' }}>
             <span className="text-[10px] font-bold" style={{ color: accent }}>G</span>
           </div>
-          <span className="text-[12px] text-neutral-500 font-medium">GuffGPT</span>
+          <span className="text-[12px] text-slate-500 font-medium">GuffGPT</span>
         </div>
-        <p className="text-[14px] text-neutral-400 leading-[1.75] pl-[34px] whitespace-pre-line">{response}</p>
+        <p className="text-[14px] text-slate-400 leading-[1.75] pl-[34px] whitespace-pre-line">{response}</p>
       </div>
     </div>
   )
@@ -195,7 +195,7 @@ export default function StoryPage() {
     return (
       <div className="pt-[60px] min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-neutral-100 mb-4">Story not found</h1>
+          <h1 className="text-2xl font-bold text-white mb-4">Story not found</h1>
           <Link to="/" className="text-indigo-400 hover:text-indigo-300 text-[14px]">Back to home</Link>
         </div>
       </div>
@@ -204,11 +204,11 @@ export default function StoryPage() {
 
   return (
     <>
-      <main className="pt-[60px]">
+      <main className="pt-[60px] overflow-hidden">
         {/* Hero image */}
         <div
           ref={heroRef}
-          className="relative w-full h-[50vh] md:h-[60vh] overflow-hidden"
+          className="relative w-full h-[54vh] md:h-[64vh] overflow-hidden"
           style={{
             opacity: heroVisible ? 1 : 0,
             transition: 'opacity 0.8s ease',
@@ -217,17 +217,19 @@ export default function StoryPage() {
           <img
             src={story.heroImage}
             alt={story.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#18181b] via-[#18181b]/40 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#18181b]/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#08080c] via-[#08080c]/55 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#08080c]/55 via-transparent to-[#08080c]/20" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#08080c] to-transparent" />
+          <div className="absolute -bottom-20 left-1/2 h-64 w-[720px] -translate-x-1/2 rounded-full blur-3xl" style={{ background: story.accent + '22' }} />
 
           {/* Title overlay */}
           <div className="absolute bottom-0 left-0 right-0 px-5 pb-10 md:pb-14">
             <div className="max-w-3xl mx-auto">
               <Link
                 to="/#use-cases"
-                className="inline-flex items-center gap-1.5 text-[13px] font-medium mb-4 hover:gap-2.5 transition-all"
+                className="chip-hover inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-black/25 px-3.5 py-2 text-[13px] font-medium mb-4 hover:gap-2.5 transition-all backdrop-blur-xl"
                 style={{ color: story.accent }}
               >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
@@ -235,10 +237,10 @@ export default function StoryPage() {
                 </svg>
                 Back to stories
               </Link>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1]">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.035em] leading-[1.05]">
                 {story.title}
               </h1>
-              <p className="mt-4 text-[16px] md:text-[18px] text-neutral-300/80 max-w-xl leading-relaxed">
+              <p className="mt-5 text-[16px] md:text-[18px] text-slate-300/85 max-w-xl leading-relaxed">
                 {story.subtitle}
               </p>
             </div>
@@ -248,28 +250,29 @@ export default function StoryPage() {
         {/* Content */}
         <div
           ref={contentRef}
-          className="px-5 py-16 md:py-20"
+          className="relative px-5 py-16 md:py-20"
           style={{
             opacity: contentVisible ? 1 : 0,
             transform: `translateY(${contentVisible ? 0 : 20}px)`,
             transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
           }}
         >
-          <div className="max-w-3xl mx-auto">
+          <div className="absolute left-0 top-20 h-72 w-72 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none" />
+          <div className="relative max-w-3xl mx-auto">
             {story.sections.map((section, i) => {
               if (section.type === 'text') return (
                 <div key={i} className="mb-10">
                   {section.heading && (
-                    <h2 className="text-2xl md:text-3xl font-bold text-neutral-100 tracking-tight mb-4 leading-[1.2]">
+                    <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-4 leading-[1.2]">
                       {section.heading}
                     </h2>
                   )}
-                  <p className="text-[16px] text-neutral-400 leading-[1.85]">{section.body}</p>
+                  <p className="text-[16px] text-slate-400 leading-[1.85]">{section.body}</p>
                 </div>
               )
               if (section.type === 'quote') return (
-                <blockquote key={i} className="my-10 md:my-14 pl-6 border-l-2 py-2" style={{ borderColor: story.accent + '40' }}>
-                  <p className="text-[18px] md:text-[20px] text-neutral-200 leading-[1.7] italic font-light">
+                <blockquote key={i} className="glass-panel my-10 md:my-14 rounded-[1.5rem] border-l-2 px-6 py-6" style={{ borderColor: story.accent + '55' }}>
+                  <p className="text-[18px] md:text-[20px] text-slate-100 leading-[1.7] italic font-light">
                     "{section.text}"
                   </p>
                   <cite className="block mt-3 text-[14px] not-italic font-medium" style={{ color: story.accent }}>
@@ -284,18 +287,18 @@ export default function StoryPage() {
             })}
 
             {/* CTA */}
-            <div className="mt-16 pt-10 border-t border-neutral-800/40 text-center">
-              <h3 className="text-2xl md:text-3xl font-bold text-neutral-100 tracking-tight mb-4">
+            <div className="glass-panel mt-16 rounded-[2rem] p-8 md:p-10 text-center">
+              <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-4">
                 Ready to try it yourself?
               </h3>
-              <p className="text-[15px] text-neutral-500 mb-8 max-w-md mx-auto">
+              <p className="text-[15px] text-slate-500 mb-8 max-w-md mx-auto">
                 Start chatting with GuffGPT for free. No downloads, no sign-up walls.
               </p>
               <a
                 href="https://chat.guffgpt.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 text-white text-[15px] font-medium rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
+                className="magnetic-btn inline-flex items-center gap-2.5 px-7 py-3.5 text-white text-[15px] font-semibold rounded-2xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
                 style={{ background: story.accent, boxShadow: '0 8px 30px -8px ' + story.accent + '40' }}
               >
                 Launch GuffGPT

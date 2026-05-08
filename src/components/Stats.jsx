@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import useReveal from '../hooks/useReveal'
 import useApiData from '../hooks/useApiData'
 
@@ -45,12 +45,15 @@ export default function Stats() {
     <section className="w-full py-20 md:py-24 px-5">
       <div
         ref={ref}
-        className="max-w-4xl mx-auto flex items-center justify-center"
+        className="glass-panel relative max-w-5xl mx-auto overflow-hidden rounded-[2rem] p-4 md:p-5"
       >
-        {stats.map((stat, i) => (
-          <div key={stat.label} className="flex items-center">
+        <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-indigo-200/40 to-transparent" />
+        <div className="absolute -left-20 top-1/2 h-48 w-48 -translate-y-1/2 rounded-full bg-indigo-500/10 blur-3xl" />
+        <div className="relative grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {stats.map((stat, i) => (
             <div
-              className="text-center px-8 md:px-14"
+              key={stat.label}
+              className="lift-card rounded-[1.5rem] border border-white/[0.07] bg-white/[0.035] px-8 py-8 text-center"
               style={{
                 opacity: visible ? 1 : 0,
                 transform: 'translateY(' + (visible ? 0 : 20) + 'px)',
@@ -58,18 +61,15 @@ export default function Stats() {
                 transitionDelay: visible ? (i * 100) + 'ms' : '0ms',
               }}
             >
-              <p className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+              <p className="text-4xl md:text-5xl font-black text-white tracking-tight">
                 <AnimatedNumber target={stat.value} suffix={stat.suffix} started={visible} />
               </p>
-              <p className="mt-2 text-[13px] text-neutral-500 font-medium tracking-wide">
+              <p className="mt-2 text-[12px] text-slate-500 font-semibold tracking-[0.18em] uppercase">
                 {stat.label}
               </p>
             </div>
-            {i < stats.length - 1 && (
-              <div className="w-px h-12 bg-neutral-800/60 shrink-0" />
-            )}
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   )

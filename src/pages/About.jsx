@@ -88,7 +88,8 @@ export default function About() {
       <main className="pt-[60px]">
         {/* Hero */}
         <section className="px-5 pt-20 md:pt-28 pb-16 md:pb-20 relative overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 50% 40% at 50% 30%, rgba(99,102,241,0.05) 0%, transparent 70%)' }} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 50% 40% at 50% 30%, rgba(99,102,241,0.16) 0%, transparent 70%)' }} />
+          <div className="absolute left-1/2 top-16 h-72 w-72 -translate-x-1/2 rounded-full bg-fuchsia-500/10 blur-3xl pointer-events-none" />
           <div
             ref={heroRef}
             className="relative max-w-3xl mx-auto text-center"
@@ -98,14 +99,15 @@ export default function About() {
               transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
             }}
           >
-            <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-indigo-400/70 mb-4">About</p>
-            <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold text-neutral-100 tracking-tight leading-[1.1]">
+            <p className="inline-flex rounded-full border border-indigo-300/15 bg-indigo-400/10 px-4 py-2 text-[11px] font-semibold tracking-[0.2em] uppercase text-indigo-300 mb-4">About</p>
+            <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-black text-white tracking-[-0.04em] leading-[1.05]">
               Our Story
             </h1>
           </div>
         </section>
 
-        <div className="max-w-3xl mx-auto px-5 space-y-24 md:space-y-32 pb-24 md:pb-32">
+        <div className="relative max-w-3xl mx-auto px-5 space-y-24 md:space-y-32 pb-24 md:pb-32">
+          <div className="absolute -left-40 top-24 h-80 w-80 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none" />
 
           {/* Our Story */}
           <Section>
@@ -121,19 +123,19 @@ export default function About() {
 
           {/* Mission */}
           <Section>
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-100 tracking-tight mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4">
               Our Mission
             </h2>
-            <p className="text-[16px] text-neutral-400 leading-[1.85] mb-10">
+            <p className="text-[16px] text-slate-400 leading-[1.85] mb-10">
               We believe that artificial intelligence should be accessible to everyone, regardless of the language they speak.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {mission.map((m, i) => (
+              {mission.map((m) => (
                 <div
                   key={m.title}
-                  className="rounded-xl border border-neutral-800/40 bg-neutral-900/20 p-6 transition-all duration-500 hover:border-neutral-700/50 hover:bg-neutral-800/15"
+                  className="lift-card rounded-[1.25rem] border border-white/[0.08] bg-white/[0.035] p-6 transition-all duration-500 hover:border-white/[0.14] hover:bg-white/[0.055]"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-neutral-800/50 border border-neutral-700/30 flex items-center justify-center mb-4 text-indigo-400/80">
+                  <div className="w-10 h-10 rounded-xl bg-indigo-400/10 border border-indigo-300/15 flex items-center justify-center mb-4 text-indigo-300">
                     {m.icon}
                   </div>
                   <h3 className="text-[16px] font-semibold text-neutral-100 mb-2">{m.title}</h3>
@@ -145,17 +147,17 @@ export default function About() {
 
           {/* Technology */}
           <Section>
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-100 tracking-tight mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4">
               The Technology
             </h2>
-            <p className="text-[16px] text-neutral-400 leading-[1.85] mb-10">
+            <p className="text-[16px] text-slate-400 leading-[1.85] mb-10">
               GuffGPT is powered by state-of-the-art large language models, running on Microsoft Azure's cloud infrastructure. This gives us enterprise-grade reliability and performance while keeping the service free for users.
             </p>
             <div className="space-y-4">
               {tech.map((t) => (
                 <div
                   key={t.title}
-                  className="flex gap-4 items-start rounded-xl border border-neutral-800/30 bg-neutral-900/10 p-5 transition-all duration-300 hover:border-neutral-700/40"
+                  className="lift-card flex gap-4 items-start rounded-[1.25rem] border border-white/[0.07] bg-white/[0.025] p-5 transition-all duration-300 hover:border-white/[0.13]"
                 >
                   <div className="w-1.5 h-1.5 rounded-full bg-indigo-400/60 mt-2.5 shrink-0" />
                   <div>
@@ -169,12 +171,12 @@ export default function About() {
 
           {/* Values */}
           <Section>
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-100 tracking-tight mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-10">
               Our Values
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {values.map((v) => (
-                <div key={v.title} className="p-6 rounded-xl border border-neutral-800/40 bg-neutral-900/20 transition-all duration-500 hover:border-neutral-700/50 hover:bg-neutral-800/15">
+                <div key={v.title} className="lift-card p-6 rounded-[1.25rem] border border-white/[0.08] bg-white/[0.035] transition-all duration-500 hover:border-white/[0.14] hover:bg-white/[0.055]">
                   <h3 className="text-[16px] font-semibold text-neutral-100 mb-2">{v.title}</h3>
                   <p className="text-[14px] text-neutral-500 leading-[1.75]">{v.desc}</p>
                 </div>
@@ -184,10 +186,10 @@ export default function About() {
 
           {/* What's Next */}
           <Section>
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-100 tracking-tight mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4">
               What's Next
             </h2>
-            <p className="text-[16px] text-neutral-400 leading-[1.85] mb-8">
+            <p className="text-[16px] text-slate-400 leading-[1.85] mb-8">
               We're constantly working to improve GuffGPT. Some things we're exploring:
             </p>
             <div className="space-y-3">
@@ -202,12 +204,12 @@ export default function About() {
 
           {/* Meet the Creators */}
           <Section>
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-100 tracking-tight mb-4 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4 text-center">
               Meet the Creators
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {/* Dikshant Pandey */}
-              <div className="rounded-xl border border-neutral-800/40 bg-neutral-900/20 p-7 flex flex-col items-center text-center">
+              <div className="lift-card rounded-[1.5rem] border border-white/[0.08] bg-white/[0.035] p-7 flex flex-col items-center text-center">
                 <h3 className="text-xl font-semibold text-indigo-300 mb-2">Dikshant Pandey</h3>
                 <p className="text-[15px] text-neutral-400 leading-[1.8] mb-2">Founder &amp; Lead Developer</p>
                 <p className="text-[15px] text-neutral-400 leading-[1.8]">
@@ -215,7 +217,7 @@ export default function About() {
                 </p>
               </div>
               {/* Prayas Bhatt */}
-              <div className="rounded-xl border border-neutral-800/40 bg-neutral-900/20 p-7 flex flex-col items-center text-center">
+              <div className="lift-card rounded-[1.5rem] border border-white/[0.08] bg-white/[0.035] p-7 flex flex-col items-center text-center">
                 <h3 className="text-xl font-semibold text-indigo-300 mb-2">Prayas Bhatt</h3>
                 <p className="text-[15px] text-neutral-400 leading-[1.8] mb-2">Web Developer</p>
                 <p className="text-[15px] text-neutral-400 leading-[1.8]">
@@ -227,8 +229,8 @@ export default function About() {
 
           {/* Get in Touch */}
           <Section>
-            <div className="text-center rounded-xl border border-neutral-800/40 bg-neutral-900/20 p-10 md:p-14">
-              <h2 className="text-2xl md:text-3xl font-bold text-neutral-100 tracking-tight mb-4">
+            <div className="glass-panel text-center rounded-[2rem] p-10 md:p-14">
+              <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-4">
                 Get in Touch
               </h2>
               <p className="text-[15px] text-neutral-500 leading-[1.75] mb-7 max-w-md mx-auto">
@@ -236,7 +238,7 @@ export default function About() {
               </p>
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 text-[13px] font-medium px-6 py-3 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 hover:bg-indigo-500/20 hover:border-indigo-500/30 transition-all duration-300"
+                className="magnetic-btn inline-flex items-center gap-2 text-[13px] font-semibold px-6 py-3 rounded-2xl bg-white text-slate-950 hover:bg-slate-200 transition-colors duration-200"
               >
                 Contact Us
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">

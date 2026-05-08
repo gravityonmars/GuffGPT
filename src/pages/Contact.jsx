@@ -51,7 +51,8 @@ export default function Contact() {
       <main className="pt-[60px]">
         {/* Hero */}
         <section className="px-5 pt-20 md:pt-28 pb-16 md:pb-20 relative overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 50% 40% at 50% 30%, rgba(99,102,241,0.05) 0%, transparent 70%)' }} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 50% 40% at 50% 30%, rgba(99,102,241,0.16) 0%, transparent 70%)' }} />
+          <div className="absolute left-1/2 top-16 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none" />
           <div
             ref={heroRef}
             className="relative max-w-3xl mx-auto text-center"
@@ -61,21 +62,22 @@ export default function Contact() {
               transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
             }}
           >
-            <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-indigo-400/70 mb-4">Contact</p>
-            <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold text-neutral-100 tracking-tight leading-[1.1]">
+            <p className="inline-flex rounded-full border border-indigo-300/15 bg-indigo-400/10 px-4 py-2 text-[11px] font-semibold tracking-[0.2em] uppercase text-indigo-300 mb-4">Contact</p>
+            <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-black text-white tracking-[-0.04em] leading-[1.05]">
               Get in Touch
             </h1>
-            <p className="mt-4 text-[16px] text-neutral-500 max-w-lg mx-auto leading-relaxed">
+            <p className="mt-5 text-[16px] text-slate-400 max-w-lg mx-auto leading-relaxed">
               Have a question, feedback, or just want to say hi? We'd love to hear from you.
             </p>
           </div>
         </section>
 
         {/* Contact form + info */}
-        <section className="px-5 pb-24 md:pb-32">
+        <section className="relative px-5 pb-24 md:pb-32">
+          <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none" />
           <div
             ref={formRef}
-            className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14"
+            className="relative glass-panel max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14 rounded-[2rem] p-5 md:p-8"
             style={{
               opacity: formVisible ? 1 : 0,
               transform: `translateY(${formVisible ? 0 : 24}px)`,
@@ -85,7 +87,7 @@ export default function Contact() {
             {/* Form */}
             <div className="lg:col-span-3">
               {submitted ? (
-                <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-10 text-center">
+                <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-10 text-center">
                   <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-5">
                     <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
@@ -102,7 +104,7 @@ export default function Contact() {
                       <input
                         type="text"
                         required
-                        className="w-full px-4 py-3 rounded-xl bg-neutral-900/50 border border-neutral-800/50 text-[14px] text-neutral-200 placeholder-neutral-600 outline-none transition-all duration-200 focus:border-indigo-500/30 focus:ring-1 focus:ring-indigo-500/20"
+                        className="glass-input w-full px-4 py-3 rounded-xl text-[14px] text-slate-200 placeholder-slate-600 outline-none transition-all duration-200"
                         placeholder="Your name"
                       />
                     </div>
@@ -111,7 +113,7 @@ export default function Contact() {
                       <input
                         type="email"
                         required
-                        className="w-full px-4 py-3 rounded-xl bg-neutral-900/50 border border-neutral-800/50 text-[14px] text-neutral-200 placeholder-neutral-600 outline-none transition-all duration-200 focus:border-indigo-500/30 focus:ring-1 focus:ring-indigo-500/20"
+                        className="glass-input w-full px-4 py-3 rounded-xl text-[14px] text-slate-200 placeholder-slate-600 outline-none transition-all duration-200"
                         placeholder="you@example.com"
                       />
                     </div>
@@ -120,7 +122,7 @@ export default function Contact() {
                     <label className="block text-[13px] font-medium text-neutral-400 mb-2">Subject</label>
                     <input
                       type="text"
-                      className="w-full px-4 py-3 rounded-xl bg-neutral-900/50 border border-neutral-800/50 text-[14px] text-neutral-200 placeholder-neutral-600 outline-none transition-all duration-200 focus:border-indigo-500/30 focus:ring-1 focus:ring-indigo-500/20"
+                      className="glass-input w-full px-4 py-3 rounded-xl text-[14px] text-slate-200 placeholder-slate-600 outline-none transition-all duration-200"
                       placeholder="What's this about?"
                     />
                   </div>
@@ -129,13 +131,13 @@ export default function Contact() {
                     <textarea
                       required
                       rows={5}
-                      className="w-full px-4 py-3 rounded-xl bg-neutral-900/50 border border-neutral-800/50 text-[14px] text-neutral-200 placeholder-neutral-600 outline-none transition-all duration-200 focus:border-indigo-500/30 focus:ring-1 focus:ring-indigo-500/20 resize-none"
+                      className="glass-input w-full px-4 py-3 rounded-xl text-[14px] text-slate-200 placeholder-slate-600 outline-none transition-all duration-200 resize-none"
                       placeholder="Tell us what's on your mind..."
                     />
                   </div>
                   <button
                     type="submit"
-                    className="inline-flex items-center gap-2.5 px-7 py-3 bg-indigo-500 hover:bg-indigo-400 text-white text-[15px] font-medium rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-500/25 cursor-pointer"
+                    className="magnetic-btn inline-flex items-center gap-2.5 px-7 py-3 bg-white hover:bg-slate-200 text-slate-950 text-[15px] font-semibold rounded-2xl transition-colors duration-200 cursor-pointer"
                   >
                     Send Message
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
@@ -149,25 +151,25 @@ export default function Contact() {
             {/* Info sidebar */}
             <div className="lg:col-span-2 space-y-6">
               {info.map((item) => (
-                <div key={item.label} className="flex items-start gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-neutral-800/50 border border-neutral-700/30 flex items-center justify-center shrink-0">
+                <div key={item.label} className="lift-card rounded-2xl border border-white/[0.07] bg-white/[0.03] p-4 flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center shrink-0">
                     {item.icon}
                   </div>
                   <div>
-                    <p className="text-[12px] font-semibold uppercase tracking-wider text-neutral-600 mb-1">{item.label}</p>
+                    <p className="text-[12px] font-semibold uppercase tracking-wider text-slate-600 mb-1">{item.label}</p>
                     {item.href ? (
-                      <a href={item.href} className="text-[15px] text-neutral-300 hover:text-indigo-400 transition-colors" target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+                      <a href={item.href} className="text-[15px] text-slate-300 hover:text-indigo-300 transition-colors" target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
                         {item.value}
                       </a>
                     ) : (
-                      <p className="text-[15px] text-neutral-300">{item.value}</p>
+                      <p className="text-[15px] text-slate-300">{item.value}</p>
                     )}
                   </div>
                 </div>
               ))}
 
-              <div className="pt-6 mt-6 border-t border-neutral-800/40">
-                <p className="text-[13px] text-neutral-600 leading-[1.7]">
+              <div className="pt-6 mt-6 border-t border-white/[0.08]">
+                <p className="text-[13px] text-slate-600 leading-[1.7]">
                   GuffGPT is built by Dikshant Pandey in Nepal. For business inquiries, partnerships, or press, reach out via email.
                 </p>
               </div>

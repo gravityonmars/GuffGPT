@@ -38,7 +38,7 @@ function FAQItem({ faq, index, visible }) {
 
   return (
     <div
-      className="border-b border-neutral-800/40"
+      className="rounded-2xl border border-white/[0.07] bg-white/[0.025] px-5 mb-3"
       style={{
         transitionDelay: visible ? `${index * 60}ms` : '0ms',
         opacity: visible ? 1 : 0,
@@ -85,8 +85,9 @@ export default function FAQ() {
   const [listRef, listVisible] = useReveal(0.05)
 
   return (
-    <section id="faq" className="w-full px-5 py-24 md:py-32">
-      <div className="max-w-6xl mx-auto">
+    <section id="faq" className="relative w-full px-5 py-24 md:py-32 overflow-hidden">
+      <div className="absolute right-1/4 top-20 h-72 w-72 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none" />
+      <div className="relative max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-10 lg:gap-20">
           {/* Left — sticky heading */}
           <div
@@ -98,7 +99,7 @@ export default function FAQ() {
               transition: 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
             }}
           >
-            <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-indigo-400/70 mb-4">FAQ</p>
+            <p className="inline-flex rounded-full border border-indigo-300/15 bg-indigo-300/[0.06] px-3 py-1.5 text-[11px] font-semibold tracking-[0.2em] uppercase text-indigo-300/80 mb-4">FAQ</p>
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-100 tracking-tight leading-tight">
               Frequently<br className="hidden lg:block" /> Asked<br className="hidden lg:block" /> Questions
             </h2>
@@ -108,7 +109,7 @@ export default function FAQ() {
           </div>
 
           {/* Right — questions */}
-          <div ref={listRef} className="border-t border-neutral-800/40">
+          <div ref={listRef} className="glass-panel rounded-[2rem] p-3 md:p-4">
             {faqs.map((faq, i) => (
               <FAQItem key={i} faq={faq} index={i} visible={listVisible} />
             ))}
